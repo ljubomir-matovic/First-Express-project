@@ -3,12 +3,19 @@ const express=require("express");
 const app=express();
 const bodyParser=require("body-parser");
 
+//protection
+const xss=require("xss-clean");
+const helmet=require("helmet");
+const cors=require("cors");
+//app.use(xss(),helmet(),cors());
+
 //middleware
 app.use(express.static("./public"));
 app.use(bodyParser.json());
 
 //routes
-
+const authRouter=require("./routes/authRoutes");
+app.use("/api/auth/",authRouter);
 
 //Connect with db and listen port
 const {openConnection,closeConnection}=require("./db");
