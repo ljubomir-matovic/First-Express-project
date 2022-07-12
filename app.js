@@ -7,7 +7,7 @@ const bodyParser=require("body-parser");
 const xss=require("xss-clean");
 const helmet=require("helmet");
 const cors=require("cors");
-//app.use(xss(),helmet(),cors());
+app.use(cors(),xss(),helmet());
 
 //middleware
 app.use(express.static("./public"));
@@ -23,7 +23,7 @@ const start=async ()=>{
     try{
         openConnection();
         const port=process.env.PORT || 8080;
-        app.listen(port);
+        app.listen(port,()=>{console.log(`Server listening on port ${port}...`)});
     }
     catch(e){
         console.error(e);

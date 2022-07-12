@@ -17,17 +17,16 @@ module.exports.connection=connection;
 /**
  * 
  * @param {string} query 
- * @param {function(results,fields)} callback Function which process results
  * @returns mysql.Query
  */
-module.exports.execute=async(query,callback)=>{
+module.exports.execute=async(query)=>{
     try{
         let result=await util.promisify(connection.query).call(connection,query);
-        return callback(result);
+        return result;
     }
     catch(err){
         console.error("Query execution:"+err);
-        return null;
+        throw err;
     }
 };
 
@@ -35,25 +34,24 @@ module.exports.execute=async(query,callback)=>{
  * 
  * @param {string} query 
  * @param {Array} values
- * @param {function(results,fields)} callback Function which process results
  * @returns mysql.Query
  */
-module.exports.executePrepared=async(query,values,callback)=>{
+module.exports.executePrepared=async(query,values)=>{
     try{
         let result=await util.promisify(connection.query).call(connection,{sql:query,values});
-        return callback(result);
+        return result;
     }
     catch(err){
-        console.error("Query execution:"+err);
-        return null;
+        console.error("Query execution:"+err.message);
+        throw err;
     }
 };
 module.exports.openConnection=()=>{
     if(connection.state=='disconnected')
         connection.connect(function(err){
             if(err){
-                console.error("Connection:"+err);
-                //throw new Error("Connection to db failed");
+                console.error("Connection:"+err.message);
+                throw new Error("Connection to db failed");
             }
         });
 };
