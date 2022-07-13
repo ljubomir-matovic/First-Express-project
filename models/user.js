@@ -1,6 +1,7 @@
 const {execute}=require("../db");
 const {BY_ID,BY_EMAIL}=require("../consts");
 const {createHash}=require("../utils");
+//TODO: add roles
 class User{
     constructor({id=0,name,password="",email,phoneNumber}){
         this.name=name;
@@ -32,25 +33,24 @@ class User{
         let sql=`SELECT id,email,name,phone_number,password FROM users WHERE `;
         switch(by){
             case BY_ID:
-                sql+="id";
+                sql+=`id=${value}`;
                 break;
             case BY_EMAIL:
-                sql+="email";
+                sql+=`email="${value}"`;
                 break;
             default:
                 console.error("BAD ACTION");
                 return null;
         }
-        sql+=`="${value}"`;
         try{
-        let result=await execute(sql);
-        if(!result || result.length==0){
-            return null;
-        }
-        result=result[0];
-        if(result[0]!=null)
-            return null;
-        return new User({id:result.id,name:result.name,password:result.password,email:result.email,phoneNumber:result.phoneNumber});
+            let result=await execute(sql);
+            if(!result || result.length==0){
+                return null;
+            }
+            result=result[0];
+            if(result[0]!=null)
+                return null;
+            return new User({id:result.id,name:result.name,password:result.password,email:result.email,phoneNumber:result.phoneNumber});
         }
         catch(err){
             return false;

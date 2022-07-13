@@ -6,7 +6,8 @@ const createJWTAccess = (payload) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET_TOKEN,{expiresIn:"1h"});
     return token;
 };
-
+const verifyToken=(token)=>jwt.verify(token,process.env.JWT_SECRET_TOKEN);
 module.exports={
-    createJWTAccess
+    createJWTAccess,
+    verifyToken
 };

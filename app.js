@@ -15,7 +15,12 @@ app.use(bodyParser.json());
 
 //routes
 const authRouter=require("./routes/authRoutes");
+const productRouter=require("./routes/productRoutes");
+const orderRouter=require("./routes/orderRoutes");
+
 app.use("/api/auth/",authRouter);
+app.use("/api/products",productRouter);
+app.use("/api/orders",orderRouter);
 
 //Connect with db and listen port
 const {openConnection,closeConnection}=require("./db");

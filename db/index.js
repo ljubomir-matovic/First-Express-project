@@ -13,7 +13,6 @@ const connection=mysql.createConnection({
     database,
 });
 module.exports.connection=connection;
-
 /**
  * 
  * @param {string} query 
