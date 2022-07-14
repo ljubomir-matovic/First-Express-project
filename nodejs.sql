@@ -22,7 +22,8 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
+CREATE DATABASE IF NOT EXISTS nodejs
+USE nodejs
 --
 -- Table structure for table `orders`
 --

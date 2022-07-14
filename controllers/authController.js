@@ -13,7 +13,7 @@ class AuthController{
         console.log(user);
         if(!user)return res.status(STATUS_CODES.NotFound).send("Bad credentials");
         if(await verifyPassword(password,user.password)){
-            res.status(STATUS_CODES.OK).send(createJWTAccess({userId:user.id,email:user.email}));
+            res.status(STATUS_CODES.OK).send({token:createJWTAccess({userId:user.id,email:user.email})});
         }
         else res.status(STATUS_CODES.NotFound).send("Bad credentials");
     }
