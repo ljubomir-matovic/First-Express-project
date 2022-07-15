@@ -22,6 +22,10 @@ app.use("/api/auth/",authRouter);
 app.use("/api/products",productRouter);
 app.use("/api/orders",orderRouter);
 
+//Not found
+
+app.use((req,res,next)=>{res.status(404).send("API do not exists")})
+
 //Connect with db and listen port
 const {openConnection,closeConnection}=require("./db");
 const start=async ()=>{
